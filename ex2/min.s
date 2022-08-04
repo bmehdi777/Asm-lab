@@ -20,7 +20,7 @@
 
 .section .data
 data_items:
-	.long 3,67,34,222,45,75,54,34,44,33,22,11,66,254,0 
+	.long 3,67,34,222,45,75,54,34,44,33,22,11,66,254,256 
 # even if it's long type (4bytes storages), the max number can't be more than
 # 255 (otherwise we get weird number on exit status)
 # Actually, process can't have more than 255 as a code status
@@ -35,7 +35,7 @@ _start:
 	movl %eax, %ebx		# since this is the first item, %eax is the biggest
 
 start_loop:	# start loop
-	cmpl $0, %eax			#check to see if we've hit the end
+	cmpl $256, %eax			#check to see if we've hit the end
 # The result of the cmpl (comparison) is stored in a particular registers :
 # %eflags also known as the status register
 	je loop_exit
@@ -45,7 +45,7 @@ start_loop:	# start loop
 	incl %edi			# load the next value
 	movl data_items(,%edi, 4), %eax
 	cmpl %ebx, %eax		# compare values
-	jle start_loop		# jump to loop beginning if the new one isn't bigger
+	jge start_loop		# jump to loop beginning if the new one isn't bigger
 
 	movl %eax, %ebx		# move the value as the largest
 	jmp start_loop
