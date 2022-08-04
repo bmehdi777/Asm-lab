@@ -3,7 +3,7 @@
 ## Compile
 
 ```bash
-> as <file.s> -o <file.o>
+as <file.s> -o <file.o>
 ``` 
 
 ## Linking
